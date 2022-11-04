@@ -1,17 +1,15 @@
-package assignmentzero
-public class EventAppend implements Event{
-    final static EventType type = EventType.APPEND;
+public class EventAppend implements Event {
     private int oldEnd;
-    public EventType getEventType();
-        {
-            return type;
-        }
+
+    public EventAppend(int oldEnd) {
+        this.oldEnd = oldEnd;
+    }
+
+    public EventType getEventType() {
+        return EventType.APPEND;
+    }
 
     public int getOldEnd() {
         return oldEnd;
-    }
-
-    public void setOldEnd(int oldEnd) {
-        this.oldEnd = oldEnd;
     }
 }

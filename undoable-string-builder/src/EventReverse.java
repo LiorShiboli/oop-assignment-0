@@ -1,10 +1,7 @@
-package assignmentzero
 public class EventReverse implements Event {
-        final static EventType type = EventType.REVERSE;
+    public EventReverse() { }
 
-        public EventType getEventType();
-
-        {
-                return type;
-        }
+    public EventType getEventType() {
+        return EventType.REVERSE;
+    }
 }

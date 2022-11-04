@@ -1,8 +1,7 @@
-package assignmentzero
 public enum EventType {
-        APPEND,
-        INSERT,
-        REPLACE,
-        DELETE,
-        REVERSE;
-        }
+    APPEND,
+    INSERT,
+    REPLACE,
+    DELETE,
+    REVERSE
+}

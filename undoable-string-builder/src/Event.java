@@ -1,4 +1,3 @@
-package assignmentzero
-public interface event{
-        public EventType getEventType();
+public interface Event {
+    public EventType getEventType();
 }

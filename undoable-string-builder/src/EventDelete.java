@@ -1,26 +1,20 @@
-package assignmentzero
 class EventDelete implements Event {
-        final static EventType type = EventType.DELETE;
-        private String deletedWord;
-        private int Start;
+    private int start;
+    private String deletedWord;
 
-        public EventType getEventType();
+    public EventDelete(int start, String deletedWord) {
+        this.start = start;
+        this.deletedWord = deletedWord;
+    }
 
-        {
-                return type;
-        }
-        public int getStart() {
-                return start;
-        }
+    public EventType getEventType() {
+        return EventType.DELETE;
+    }
+    public int getStart() {
+        return this.start;
+    }
 
-        public void setStart(int start) {
-                this.start = start;
-        }
-        public String getDeletedWordWord() {
-                return deletedWord;
-        }
-
-        public void setDeletedWordWord(String appendedWord) {
-                this.deletedWord = deletedWord;
-        }
+    public String getDeletedWordWord() {
+        return this.deletedWord;
+    }
 }

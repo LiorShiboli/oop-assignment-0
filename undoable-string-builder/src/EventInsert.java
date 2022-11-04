@@ -1,11 +1,21 @@
-package assignmentzero
 public class EventInsert implements Event {
-        final static EventType type = EventType.INSERT;
-        private int start, end;
+    private int start;
+    private int end;
 
-        public EventType getEventType();
+    public EventInsert(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
 
-        {
-                return type;
-        }
+    public EventType getEventType() {
+        return EventType.INSERT;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public int getEnd() {
+        return end;
+    }
 }
