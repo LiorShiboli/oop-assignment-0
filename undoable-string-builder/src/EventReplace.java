@@ -1,4 +1,4 @@
-class EventReplace implements Event{
+class EventReplace implements Event {
     private int start;
     private int end;
     private String replacedWord;
