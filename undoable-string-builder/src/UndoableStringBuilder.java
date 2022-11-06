@@ -1,5 +1,51 @@
 import java.util.Stack;
 
+/**
+ * {@code  UndoableStringBuilder} using instance of {@link StringBuilder}
+ * A mutable sequence of characters.  This class provides an API compatible
+ * with {@code StringBuffer}, but with no guarantee of synchronization.
+ * This class is designed for use as a drop-in replacement for
+ * {@code StringBuffer} in places where the string buffer was being
+ * used by a single thread (as is generally the case).   Where possible,
+ * it is recommended that this class be used in preference to
+ * {@code StringBuffer} as it will be faster under most implementations.
+ *
+ * <p>The principal operations on a {@code UndoableStringBuilder} are the
+ * {@code append} and {@code insert} methods, which are
+ * overloaded so as to accept data of any type. Each effectively
+ * converts a given datum to a string and then appends or inserts the
+ * characters of that string to the {@code UndoableStringBuilder}. The
+ * {@code append} method always adds these characters at the end
+ * of the builder; the {@code insert} method adds the characters at
+ * a specified point.
+ * <p>
+ * For example, if {@code z} refers to a {@code UndoableStringBuilder} object
+ * whose current contents are "{@code start}", then
+ * the method call {@code z.append("le")} would cause the {@code UndoableStringBuilder}
+ * to contain "{@code startle}", whereas
+ * {@code z.insert(4, "le")} would alter the {@code UndoableStringBuilder} to
+ * contain "{@code starlet}".
+ * <p>
+ * In general, if sb refers to an instance of a {@code UndoableStringBuilder},
+ * then {@code sb.append(x)} has the same effect as
+ * {@code sb.insert(sb.length(), x)}.
+ * <p>
+ * Every undoable {@code UndoableStringBuilder} has a capacity. As long as the length of the
+ * character sequence contained in the {@code UndoableStringBuilder} does not exceed
+ * the capacity, it is not necessary to allocate a new internal
+ * buffer. If the internal buffer overflows, it is automatically made larger.
+ *
+ * <p>Instances of {@code UndoableStringBuilder} are not safe for
+ * use by multiple threads. If such synchronization is required then it is
+ * recommended that {@link java.lang.StringBuffer} be used.
+ *
+ * <p>Unless otherwise noted, passing a {@code null} argument to a constructor
+ * or method in this class will cause a {@link NullPointerException} to be
+ * thrown.
+ * @apiNote
+ * This docs of {@code  UndoableStringBuilder} is based on the docs of {@link StringBuilder}
+ */
+
 public class UndoableStringBuilder {
 
     // TODO: add docs
@@ -60,11 +106,10 @@ public class UndoableStringBuilder {
         this(new StringBuilder(seq));
     }
 
-    // TODO: add docs
-    public UndoableStringBuilder undo() {
-        return this;
+    @Override
+    public String toString() {
+        return this.builder.toString();
     }
-
 
     /**
      * Appends the specified string to this character sequence.
@@ -190,8 +235,8 @@ public class UndoableStringBuilder {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return this.builder.toString();
+    // TODO: add docs
+    public UndoableStringBuilder undo() {
+        return this;
     }
 }
