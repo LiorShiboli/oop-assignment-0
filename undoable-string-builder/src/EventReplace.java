@@ -1,12 +1,18 @@
 class EventReplace implements Event {
     private int start;
     private int end;
-    private String replacedWord;
+    private String replacedstring;
 
-    public EventReplace(int start, int end, String replacedWord) {
+    /**
+     *
+     * @param start (the index at which the start of the string thats been replaced)
+     * @param end (the index that the word that replaced the string ended
+     * @param replacedstring (the string thats been replaced_
+     */
+    public EventReplace(int start, int end, String replacedstring) {
         this.start = start;
         this.end = end;
-        this.replacedWord = replacedWord;
+        this.replacedstring = replacedstring;
     }
 
     public EventType getEventType() {
@@ -21,7 +27,7 @@ class EventReplace implements Event {
         return end;
     }
 
-    public String getReplacedWord() {
-        return replacedWord;
+    public String getReplacedstring() {
+        return replacedstring;
     }
 }

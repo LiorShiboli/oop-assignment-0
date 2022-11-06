@@ -1,10 +1,15 @@
 class EventDelete implements Event {
     private int start;
-    private String deletedWord;
+    private String deletedstring;
 
-    public EventDelete(int start, String deletedWord) {
+    /**
+     *
+     * @param the index that the string has been deleted from
+     * @param the string thats been deleted
+     */
+    public EventDelete(int start, String deletedstring) {
         this.start = start;
-        this.deletedWord = deletedWord;
+        this.deletedstring = deletedstring;
     }
 
     public EventType getEventType() {
@@ -15,6 +20,6 @@ class EventDelete implements Event {
     }
 
     public String getDeletedWordWord() {
-        return this.deletedWord;
+        return this.deletedstring;
     }
 }

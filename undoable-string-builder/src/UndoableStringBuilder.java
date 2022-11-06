@@ -235,7 +235,11 @@ public class UndoableStringBuilder {
         return this;
     }
 
-    // TODO: add docs
+     /**
+     *resets the stringbuilder to its previous state before the last change by reversing the last action
+     * multiple undos reset further
+      * @return this object
+     */
     public UndoableStringBuilder undo() {
         return this;
     }
