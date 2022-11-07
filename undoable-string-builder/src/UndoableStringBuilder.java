@@ -49,10 +49,14 @@ import java.util.Stack;
 
 public class UndoableStringBuilder {
 
-    // TODO: add docs
+    /**
+     * The original StringBuilder
+     */
     private StringBuilder builder;
 
-    // TODO: add docs
+    /**
+     * Stack of the events that the instance dose
+     */
     private Stack<Event> events;
 
     /**
