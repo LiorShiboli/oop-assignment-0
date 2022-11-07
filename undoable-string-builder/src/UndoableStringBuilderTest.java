@@ -31,10 +31,6 @@ public class UndoableStringBuilderTest {
         builder.append("B");
         builder.undo();
         assertEquals(builder.toString(), "The first line\nA");
-
-        assertThrows(NullPointerException.class, ()-> {
-            builder.append(null);
-        });
     }
 
     @Test

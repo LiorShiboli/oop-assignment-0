@@ -135,17 +135,11 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder append(String str) {
-
-        if (str == null) {
-            throw new NullPointerException("str cannot be null");
-        }
-
         Event event = new AppendEvent(str.length() - 1);
 
         builder.append(str);
 
         events.push(event);
-
         return this;
     }
 
@@ -221,11 +215,12 @@ public class UndoableStringBuilder {
             throw new IndexOutOfBoundsException("offset is out of bound");
         }
 
+        Event event;
         if (str == null) {
-            throw new NullPointerException("str cannot be null");
+            event = new InsertEvent(offset, 4); // null
+        } else {
+            event = new InsertEvent(offset, str.length());
         }
-
-        Event event = new InsertEvent(offset, str.length());
 
         builder.insert(offset, str);
 
@@ -273,7 +268,6 @@ public class UndoableStringBuilder {
         builder.replace(start, end, str);
 
         events.push(event);
-
         return this;
     }
 
