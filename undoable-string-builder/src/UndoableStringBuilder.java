@@ -1,3 +1,4 @@
+import java.awt.desktop.AppEvent;
 import java.util.Stack;
 
 /**
@@ -235,10 +236,10 @@ public class UndoableStringBuilder {
         return this;
     }
 
-     /**
-     *resets the stringbuilder to its previous state before the last change by reversing the last action
-     * multiple undos reset further
-      * @return this object
+    /**
+     * undo the last action the undoable string builder dos
+     *
+     * @return  a reference to this object.
      */
     public UndoableStringBuilder undo() {
         return this;

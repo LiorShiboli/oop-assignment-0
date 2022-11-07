@@ -1,7 +1,6 @@
 public interface Event {
     /**
-     * returns the action thats been done
-     * @return
+     * @return the event type
      */
     public EventType getEventType();
 }
