@@ -254,7 +254,7 @@ public class UndoableStringBuilder {
             throw new IndexOutOfBoundsException("start is out of bound");
         }
 
-        if (end < start || end >= oldValue.length()) {
+        if (end < start || end > oldValue.length()) {
             throw new IndexOutOfBoundsException("end is out of bound");
         }
 
@@ -262,7 +262,7 @@ public class UndoableStringBuilder {
             throw new NullPointerException("str cannot be null");
         }
 
-        String replacedString = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
+        String replacedString = oldValue.substring(start, end );
         Event event = new ReplaceEvent(start, start + str.length(), replacedString);
 
         builder.replace(start, end, str);
@@ -306,6 +306,38 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder undo() {
+        Event event = events.pop();
+        switch (event.getEventType())
+        {
+            case APPEND :
+                AppendEvent eventA = (AppendEvent) event;
+                builder.delete(eventA.getOldEnd()+1,builder.length());
+                break;
+
+            case INSERT :
+                InsertEvent eventI = (InsertEvent) event;
+                builder.delete(eventI.getStart(),eventI.getStart()+eventI.getLength()+1);
+                break;
+
+
+            case REPLACE:
+                ReplaceEvent eventR=(ReplaceEvent) event;
+                builder.replace(eventR.getStart(),eventR.getEnd(),eventR.getReplacedString());
+                break;
+
+
+            case DELETE:
+                DeleteEvent eventD=(DeleteEvent) event;
+                builder.insert(eventD.getStart(),eventD.getDeletedString());
+                break;
+
+
+            case REVERSE:
+                builder.reverse();
+                break;
+
+
+        }
         return this;
     }
 }
