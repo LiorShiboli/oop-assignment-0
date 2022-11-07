@@ -131,6 +131,17 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder append(String str) {
+
+        if (str == null) {
+            throw new NullPointerException("str cannot be null");
+        }
+
+        Event event = new AppendEvent(str.length() - 1);
+
+        builder.append(str);
+
+        events.push(event);
+
         return this;
     }
 
@@ -149,6 +160,22 @@ public class UndoableStringBuilder {
      *             greater than {@code end}.
      */
     public UndoableStringBuilder delete(int start, int end) {
+        String oldValue = builder.toString();
+
+        if (start < 0 || oldValue.length() < start) {
+            throw new IndexOutOfBoundsException("start is out of bound");
+        }
+
+        if (end < start) {
+            throw new IllegalArgumentException("end cannot be less then the start");
+        }
+
+        String deletedStr = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
+        Event event = new DeleteEvent(start, deletedStr);
+
+        builder.delete(start, end);
+
+        events.push(event);
         return this;
     }
 
@@ -175,7 +202,7 @@ public class UndoableStringBuilder {
      * {@code offset+str.length()}
      * </ul><p>
      * The {@code offset} argument must be greater than or equal to
-     * {@code 0}, and less than or equal to the {@linkplain #length() length}
+     * {@code 0}, and less than or equal to the length
      * of this sequence.
      *
      * @param      offset   the offset.
@@ -184,6 +211,21 @@ public class UndoableStringBuilder {
      * @throws     StringIndexOutOfBoundsException  if the offset is invalid.
      */
     public UndoableStringBuilder insert(int offset, String str) {
+        String oldValue = builder.toString();
+
+        if (offset < 0 || oldValue.length() < offset) {
+            throw new IndexOutOfBoundsException("offset is out of bound");
+        }
+
+        if (str == null) {
+            throw new NullPointerException("str cannot be null");
+        }
+
+        Event event = new InsertEvent(offset, str.length());
+
+        builder.insert(offset, str);
+
+        events.push(event);
         return this;
     }
 
@@ -207,6 +249,27 @@ public class UndoableStringBuilder {
      *             greater than {@code end}.
      */
     public UndoableStringBuilder replace(int start, int end, String str) {
+        String oldValue = builder.toString();
+
+        if (start < 0 || oldValue.length() < start) {
+            throw new IndexOutOfBoundsException("start is out of bound");
+        }
+
+        if (end < start) {
+            throw new IllegalArgumentException("end cannot be less then the start");
+        }
+
+        if (str == null) {
+            throw new NullPointerException("str cannot be null");
+        }
+
+        String replacedString = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
+        Event event = new ReplaceEvent(start, start + str.length(), replacedString);
+
+        builder.replace(start, end, str);
+
+        events.push(event);
+
         return this;
     }
 
@@ -233,6 +296,9 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder reverse() {
+        builder.reverse();
+
+        events.push(new ReverseEvent());
         return this;
     }
 

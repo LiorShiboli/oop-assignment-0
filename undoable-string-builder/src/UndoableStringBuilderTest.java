@@ -41,11 +41,11 @@ public class UndoableStringBuilderTest {
     public void delete() {
         UndoableStringBuilder builder = new UndoableStringBuilder("0123456789");
 
-        builder.delete(0, 5);
+        builder.delete(0, 6);
         assertEquals(builder.toString(), "6789");
 
-        builder.delete(1, 2);
-        assertEquals(builder.toString(), "78");
+        builder.delete(1, 3);
+        assertEquals(builder.toString(), "69");
 
         builder.undo();
         assertEquals(builder.toString(), "6789");
@@ -57,8 +57,8 @@ public class UndoableStringBuilderTest {
             builder.delete(-1, 2);
         });
 
-        assertThrows(IndexOutOfBoundsException.class, ()-> {
-            builder.delete(0, 20);
+        assertThrows(IllegalArgumentException.class, ()-> {
+            builder.delete(5, 1);
         });
     }
 
@@ -99,16 +99,16 @@ public class UndoableStringBuilderTest {
     public void replace() {
         UndoableStringBuilder builder = new UndoableStringBuilder("0123456789");
 
-        builder.replace(0, 4, "----");
+        builder.replace(0, 5, "----");
         assertEquals(builder.toString(), "----56789");
 
         builder.undo();
         assertEquals(builder.toString(), "0123456789");
 
-        builder.replace(1, 5, "--");
+        builder.replace(1, 6, "--");
         assertEquals(builder.toString(), "0--6789");
 
-        builder.replace(1, 2, "AA");
+        builder.replace(1, 3, "AA");
         assertEquals(builder.toString(), "0AA6789");
 
         builder.undo();
