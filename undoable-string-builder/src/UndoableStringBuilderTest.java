@@ -53,7 +53,7 @@ public class UndoableStringBuilderTest {
             builder.delete(-1, 2);
         });
 
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IndexOutOfBoundsException.class, ()-> {
             builder.delete(5, 1);
         });
     }

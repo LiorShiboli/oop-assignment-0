@@ -164,8 +164,8 @@ public class UndoableStringBuilder {
             throw new IndexOutOfBoundsException("start is out of bound");
         }
 
-        if (end < start) {
-            throw new IllegalArgumentException("end cannot be less then the start");
+        if (end < start || end >= oldValue.length()) {
+            throw new IndexOutOfBoundsException("end is out of bound");
         }
 
         String deletedStr = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
@@ -254,8 +254,8 @@ public class UndoableStringBuilder {
             throw new IndexOutOfBoundsException("start is out of bound");
         }
 
-        if (end < start) {
-            throw new IllegalArgumentException("end cannot be less then the start");
+        if (end < start || end >= oldValue.length()) {
+            throw new IndexOutOfBoundsException("end is out of bound");
         }
 
         if (str == null) {
