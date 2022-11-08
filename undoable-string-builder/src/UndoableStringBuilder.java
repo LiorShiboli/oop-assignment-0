@@ -135,7 +135,7 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder append(String str) {
-        Event event = new AppendEvent(str.length() - 1);
+        Event event = new AppendEvent(builder.toString().length() - 1);
 
         builder.append(str);
 
@@ -306,37 +306,31 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder undo() {
+
+        // remove last event from events
         Event event = events.pop();
-        switch (event.getEventType())
-        {
-            case APPEND :
-                AppendEvent eventA = (AppendEvent) event;
-                builder.delete(eventA.getOldEnd()+1,builder.length());
+
+        // undo the last event
+        switch (event.getEventType()) {
+            case APPEND:
+                AppendEvent eventA = (AppendEvent)event;
+                builder.delete(eventA.getOldEnd() + 1, builder.length());
                 break;
-
-            case INSERT :
-                InsertEvent eventI = (InsertEvent) event;
-                builder.delete(eventI.getStart(),eventI.getStart()+eventI.getLength()+1);
+            case INSERT:
+                InsertEvent eventI = (InsertEvent)event;
+                builder.delete(eventI.getStart(), eventI.getStart() + eventI.getLength() + 1);
                 break;
-
-
             case REPLACE:
-                ReplaceEvent eventR=(ReplaceEvent) event;
-                builder.replace(eventR.getStart(),eventR.getEnd(),eventR.getReplacedString());
+                ReplaceEvent eventR = (ReplaceEvent)event;
+                builder.replace(eventR.getStart(), eventR.getEnd(), eventR.getReplacedString());
                 break;
-
-
             case DELETE:
-                DeleteEvent eventD=(DeleteEvent) event;
-                builder.insert(eventD.getStart(),eventD.getDeletedString());
+                DeleteEvent eventD = (DeleteEvent)event;
+                builder.insert(eventD.getStart(), eventD.getDeletedString());
                 break;
-
-
             case REVERSE:
                 builder.reverse();
                 break;
-
-
         }
         return this;
     }
