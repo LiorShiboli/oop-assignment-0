@@ -318,7 +318,7 @@ public class UndoableStringBuilder {
                 break;
             case INSERT:
                 InsertEvent eventI = (InsertEvent)event;
-                builder.delete(eventI.getStart(), eventI.getStart() + eventI.getLength() + 1);
+                builder.delete(eventI.getStart(), eventI.getStart() + eventI.getLength());
                 break;
             case REPLACE:
                 ReplaceEvent eventR = (ReplaceEvent)event;

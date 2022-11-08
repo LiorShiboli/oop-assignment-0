@@ -32,6 +32,12 @@ public class UndoableStringBuilderTest {
         builder.undo();
         builder.undo();
         assertEquals("The first line\n", builder.toString());
+
+        builder.append(null);
+        assertEquals("The first line\nnull", builder.toString());
+
+        builder.undo();
+        assertEquals("The first line\n", builder.toString());
     }
 
     @Test
@@ -73,6 +79,12 @@ public class UndoableStringBuilderTest {
         assertEquals("0123", builder.toString());
 
         builder.insert(2, "---");
+        assertEquals("01---23", builder.toString());
+
+        builder.insert(2, null);
+        assertEquals("01null---23", builder.toString());
+
+        builder.undo();
         assertEquals("01---23", builder.toString());
 
         builder.undo();
