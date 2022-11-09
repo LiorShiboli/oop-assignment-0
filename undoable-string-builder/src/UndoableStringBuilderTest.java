@@ -127,6 +127,10 @@ public class UndoableStringBuilderTest {
         assertThrows(IndexOutOfBoundsException.class, ()-> {
             builder.delete(0, 30);
         });
+
+        assertThrows(NullPointerException.class, ()-> {
+           builder.replace(0, 1, null);
+        });
     }
 
     @Test
