@@ -158,6 +158,8 @@ public class UndoableStringBuilder {
      *             greater than {@code end}.
      */
     public UndoableStringBuilder delete(int start, int end) {
+        // The function do not use try-catch. because, it is not needed
+
         String oldValue = builder.toString();
 
         if (start < 0 || oldValue.length() < start) {
@@ -209,6 +211,8 @@ public class UndoableStringBuilder {
      * @throws     StringIndexOutOfBoundsException  if the offset is invalid.
      */
     public UndoableStringBuilder insert(int offset, String str) {
+        // The function do not use try-catch. because, it is not needed
+
         String oldValue = builder.toString();
 
         if (offset < 0 || oldValue.length() < offset) {
@@ -248,6 +252,8 @@ public class UndoableStringBuilder {
      *             greater than {@code end}.
      */
     public UndoableStringBuilder replace(int start, int end, String str) {
+        // The function do not use try-catch. because, it is not needed
+
         String oldValue = builder.toString();
 
         if (start < 0 || oldValue.length() < start) {
@@ -306,6 +312,7 @@ public class UndoableStringBuilder {
      * @return  a reference to this object.
      */
     public UndoableStringBuilder undo() {
+        // The function do not use try-catch. because, it is not needed
 
         // remove last event from events
         Event event = events.pop();
