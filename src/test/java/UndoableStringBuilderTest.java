@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import observer.UndoableStringBuilder;
 import org.junit.jupiter.api.*;
 
 public class UndoableStringBuilderTest {
