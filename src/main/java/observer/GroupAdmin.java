@@ -67,13 +67,13 @@ public class GroupAdmin extends UndoableStringBuilder implements Sender {
     @Override
     public void replace(int start, int end, String str) {
         super.replace(start, end, str);
-        this.updateMembers();
+        // this.updateMembers(); // not in Sender
     }
 
     @Override
     public void reverse() {
         super.reverse();
-        this.updateMembers();
+        // this.updateMembers(); // not in Sender
     }
 
     @Override
