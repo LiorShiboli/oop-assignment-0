@@ -28,10 +28,17 @@ public class ConcreteMember implements Member {
     public void update(UndoableStringBuilder usb) {
         System.out.println("INFO: Member " + name + " updated.");
 
-        int needed = usb.toString().length() - minLength;
-        while (needed > 0) {
-            usb.append(this.addToEnd);
-            needed -= this.addToEnd.length();
+        int needed = minLength - usb.toString().length();
+        if (needed > 0) {
+            // create the str that append to the usb
+            StringBuilder neededBuilder = new StringBuilder();
+            while (needed > 0) {
+                neededBuilder.append(this.addToEnd);
+                needed -= this.addToEnd.length();
+            }
+
+            // update the usb
+            usb.append(neededBuilder.toString());
         }
     }
 }

@@ -136,13 +136,12 @@ public class UndoableStringBuilder {
      * @param   str   a string.
      * @return  a reference to this object.
      */
-    public UndoableStringBuilder append(String str) {
+    public void append(String str) {
         Event event = new AppendEvent(builder.toString().length() - 1);
 
         builder.append(str);
 
         events.push(event);
-        return this;
     }
 
     /**
@@ -159,7 +158,7 @@ public class UndoableStringBuilder {
      *             is negative, greater than {@code length()}, or
      *             greater than {@code end}.
      */
-    public UndoableStringBuilder delete(int start, int end) {
+    public void delete(int start, int end) {
         // The function do not use try-catch. because, it is not needed
 
         String oldValue = builder.toString();
@@ -178,7 +177,6 @@ public class UndoableStringBuilder {
         builder.delete(start, end);
 
         events.push(event);
-        return this;
     }
 
     /**
@@ -212,7 +210,7 @@ public class UndoableStringBuilder {
      * @return     a reference to this object.
      * @throws     StringIndexOutOfBoundsException  if the offset is invalid.
      */
-    public UndoableStringBuilder insert(int offset, String str) {
+    public void insert(int offset, String str) {
         // The function do not use try-catch. because, it is not needed
 
         String oldValue = builder.toString();
@@ -231,7 +229,6 @@ public class UndoableStringBuilder {
         builder.insert(offset, str);
 
         events.push(event);
-        return this;
     }
 
     /**
@@ -253,7 +250,7 @@ public class UndoableStringBuilder {
      *             is negative, greater than {@code length()}, or
      *             greater than {@code end}.
      */
-    public UndoableStringBuilder replace(int start, int end, String str) {
+    public void replace(int start, int end, String str) {
         // The function do not use try-catch. because, it is not needed
 
         String oldValue = builder.toString();
@@ -276,7 +273,6 @@ public class UndoableStringBuilder {
         builder.replace(start, end, str);
 
         events.push(event);
-        return this;
     }
 
     /**
@@ -301,11 +297,10 @@ public class UndoableStringBuilder {
      *
      * @return  a reference to this object.
      */
-    public UndoableStringBuilder reverse() {
+    public void reverse() {
         builder.reverse();
 
         events.push(new ReverseEvent());
-        return this;
     }
 
     /**
@@ -313,7 +308,7 @@ public class UndoableStringBuilder {
      *
      * @return  a reference to this object.
      */
-    public UndoableStringBuilder undo() {
+    public void undo() {
         // The function do not use try-catch. because, it is not needed
 
         // remove last event from events
@@ -341,6 +336,5 @@ public class UndoableStringBuilder {
                 builder.reverse();
                 break;
         }
-        return this;
     }
 }
