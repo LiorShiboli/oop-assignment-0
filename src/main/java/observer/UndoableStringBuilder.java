@@ -163,18 +163,24 @@ public class UndoableStringBuilder {
 
         String oldValue = builder.toString();
 
-        if (start < 0 || oldValue.length() < start) {
-            throw new IndexOutOfBoundsException("start is out of bound");
+        Event event;
+
+        if (start == end) {
+            event = new DeleteEvent(start, "");
+        } else {
+            if (start < 0 || oldValue.length() < start) {
+                throw new IndexOutOfBoundsException("start is out of bound");
+            }
+
+            if (end < start || end >= oldValue.length()) {
+                throw new IndexOutOfBoundsException("end is out of bound");
+            }
+
+            String deletedStr = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
+            event = new DeleteEvent(start, deletedStr);
+
+            builder.delete(start, end);
         }
-
-        if (end < start || end >= oldValue.length()) {
-            throw new IndexOutOfBoundsException("end is out of bound");
-        }
-
-        String deletedStr = oldValue.substring(start, (end < oldValue.length()) ? end : oldValue.length() - 1);
-        Event event = new DeleteEvent(start, deletedStr);
-
-        builder.delete(start, end);
 
         events.push(event);
     }
