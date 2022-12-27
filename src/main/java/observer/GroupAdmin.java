@@ -60,13 +60,12 @@ public class GroupAdmin extends UndoableStringBuilder implements Sender {
 
     @Override
     public void insert(int offset, String str) {
-        super.append(str);
+        super.insert(offset, str);
         this.updateMembers();
     }
 
     @Override
-    public void replace(int start, int end, String str)
-    {
+    public void replace(int start, int end, String str) {
         super.replace(start, end, str);
         this.updateMembers();
     }
