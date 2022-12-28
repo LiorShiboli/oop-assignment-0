@@ -1,6 +1,7 @@
 package observer;
 
 public class ConcreteMember implements Member {
+    private UndoableStringBuilder usb;
     private String name;
 
     private int minLength;
@@ -23,9 +24,14 @@ public class ConcreteMember implements Member {
         }
     }
 
+    public UndoableStringBuilder getUndoableStringBuilder() {
+        return usb;
+    }
 
     @Override
     public void update(UndoableStringBuilder usb) {
+        this.usb = usb; // and this is stupidity
+
         System.out.println("INFO: Member " + name + " updated.");
 
         int needed = minLength - usb.toString().length();
