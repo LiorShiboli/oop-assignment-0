@@ -2,24 +2,44 @@ package observer;
 
 import java.util.ArrayList;
 
+/**
+ * Simple Sender based ArrayList
+ */
 public class GroupAdmin implements Sender {
 
     // Members
+    /**
+     * The UndoableStringBuilder
+     */
     private final UndoableStringBuilder undoableStringBuilder;
-    private int membersLength = 0;
 
+    /**
+     * List of members that in the group admin
+     */
     private final ArrayList<Member> members;
 
+    /**
+     * Start with empty UndoableStringBuilder
+     */
     public GroupAdmin() {
         this.undoableStringBuilder = new UndoableStringBuilder();
         this.members = new ArrayList<>();
     }
 
+    /**
+     * Start with UndoableStringBuilder with value
+     * @param seq the value
+     */
     public GroupAdmin(CharSequence seq) {
         this.undoableStringBuilder = new UndoableStringBuilder(seq);
         this.members = new ArrayList<>();
     }
 
+    /**
+     * Start with empty UndoableStringBuilder
+     * Set the capacity of the UndoableStringBuilder
+     * @param capacity the new capacity
+     */
     public GroupAdmin(int capacity) {
         this.undoableStringBuilder = new UndoableStringBuilder(capacity);
         this.members = new ArrayList<>();
@@ -38,12 +58,7 @@ public class GroupAdmin implements Sender {
     // Registration actions
     @Override
     public void register(Member member) {
-        if (this.members.size() == membersLength) {
-            this.members.add(member);
-        } else {
-            this.members.set(membersLength, member);
-        }
-        membersLength++;
+        this.members.add(member);
     }
 
     @Override
@@ -51,10 +66,8 @@ public class GroupAdmin implements Sender {
         int i = this.members.indexOf(member);
 
         if (i >= 0) {
-            this.members.set(i, this.members.get(membersLength - 1));
-            this.members.set(membersLength - 1, null);
-            this.members.remove(membersLength - 1);
-            membersLength--;
+            this.members.set(i, this.members.get(this.members.size() - 1));
+            this.members.remove(this.members.size() - 1);
         }
     }
 
@@ -84,9 +97,13 @@ public class GroupAdmin implements Sender {
     }
 
     // Update
+
+    /**
+     * private methode for updates the members
+     */
     private void updateMembers() {
-        for (int i = 0; i < this.membersLength; i++) {
-            this.members.get(i).update(this.undoableStringBuilder);
+        for (Member member : this.members) {
+            member.update(this.undoableStringBuilder);
         }
     }
 }

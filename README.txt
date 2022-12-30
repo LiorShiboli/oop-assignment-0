@@ -1,7 +1,5 @@
 # OOP Assignment 1
 
-![assignment - version](https://img.shields.io/badge/Assignment-1-blue)
-
 This is assignment project for the university
 
 ## Requirements
