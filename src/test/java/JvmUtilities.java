@@ -38,7 +38,4 @@ public final class JvmUtilities {
         return JvmUtilities.objectTotalSize(o) +
                 "\n" +JvmUtilities.objectFootprint(o);
     }
-
-
-
 }

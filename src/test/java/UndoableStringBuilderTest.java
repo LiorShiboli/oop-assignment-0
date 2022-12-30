@@ -10,9 +10,11 @@ public class UndoableStringBuilderTest {
     public void build() {
         UndoableStringBuilder builder1 = new UndoableStringBuilder();
         UndoableStringBuilder builder2 = new UndoableStringBuilder("with value");
+        UndoableStringBuilder builder3 = new UndoableStringBuilder(10);
 
         assertEquals("", builder1.toString());
         assertEquals("with value", builder2.toString());
+        assertEquals("", builder3.toString());
     }
 
     @Test
@@ -64,6 +66,10 @@ public class UndoableStringBuilderTest {
         assertThrows(IndexOutOfBoundsException.class, ()-> {
             builder.delete(5, 1);
         });
+
+        builder.delete(0, 20);
+        builder.delete(0, 0);
+        assertEquals("", builder.toString());
     }
 
     @Test
@@ -123,10 +129,6 @@ public class UndoableStringBuilderTest {
 
         assertThrows(IndexOutOfBoundsException.class, ()-> {
             builder.delete(-1, 1);
-        });
-
-        assertThrows(IndexOutOfBoundsException.class, ()-> {
-            builder.delete(0, 30);
         });
 
         assertThrows(NullPointerException.class, ()-> {

@@ -2,23 +2,28 @@ package observer;
 
 public class ConcreteMember implements Member {
     private UndoableStringBuilder usb;
-    private String name;
+    private final String name;
 
-    private int minLength;
-    private int maxlength;
-    private String addToEnd;
+    private final int minLength;
+    private final int maxLength;
+    private final String addToEnd;
 
     public ConcreteMember(String name) {
         this.name = name;
         this.minLength = 0;
-        this.maxlength = Integer.MAX_VALUE;
+        this.maxLength = Integer.MAX_VALUE;
         this.addToEnd = null;
     }
 
-    public ConcreteMember(String name, int minLength,int maxlength, String addToEnd) {
+    public ConcreteMember(String name, int minLength, String addToEnd) {
+        this(name, minLength, Integer.MAX_VALUE, addToEnd);
+    }
+
+    public ConcreteMember(String name, int minLength, int maxLength, String addToEnd) {
         this.name = name;
         this.minLength = Math.max(minLength, 0);
-        this.maxlength = Math.max(maxlength,0);
+        this.maxLength = Math.max(maxLength, minLength);
+
         if (this.minLength == 0) {
             this.addToEnd = null;
         } else {
@@ -26,29 +31,44 @@ public class ConcreteMember implements Member {
         }
     }
 
+    // Getters
     public UndoableStringBuilder getUndoableStringBuilder() {
         return usb;
     }
 
+    public UndoableStringBuilder getUsb() {
+        return usb;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMinLength() {
+        return minLength;
+    }
+
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    public String getAddToEnd() {
+        return addToEnd;
+    }
+
+    // Update
     @Override
     public void update(UndoableStringBuilder usb) {
-        this.usb = usb; // and this is stupid
+        this.usb = usb;
 
         System.out.println("INFO: Member " + name + " updated.");
-        if(usb.toString().length()>maxlength){
-            usb.delete(maxlength,usb.toString().length());
-        }
-        int needed = minLength - usb.toString().length();
-        if (needed > 0) {
-            // create the str that append to the usb
-            StringBuilder neededBuilder = new StringBuilder();
-            while (needed > 0) {
-                neededBuilder.append(this.addToEnd);
-                needed -= this.addToEnd.length();
-            }
 
-            // update the usb
-            usb.append(neededBuilder.toString());
+        if (this.usb.toString().length() > this.maxLength){
+            this.usb.delete(this.maxLength, this.usb.toString().length());
+        } else {
+            while (this.usb.toString().length() < this.minLength) {
+                this.usb.append(this.addToEnd);
+            }
         }
     }
 }

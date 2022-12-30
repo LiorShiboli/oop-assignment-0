@@ -1,26 +1,38 @@
 package observer;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
-public class GroupAdmin extends UndoableStringBuilder implements Sender {
+public class GroupAdmin implements Sender {
+
     // Members
+    private final UndoableStringBuilder undoableStringBuilder;
     private int membersLength = 0;
-    private ArrayList<Member> members;
+
+    private final ArrayList<Member> members;
 
     public GroupAdmin() {
-        super();
+        this.undoableStringBuilder = new UndoableStringBuilder();
         this.members = new ArrayList<>();
     }
 
     public GroupAdmin(CharSequence seq) {
-        super(seq);
+        this.undoableStringBuilder = new UndoableStringBuilder(seq);
         this.members = new ArrayList<>();
     }
 
     public GroupAdmin(int capacity) {
-        super(capacity);
+        this.undoableStringBuilder = new UndoableStringBuilder(capacity);
         this.members = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return this.undoableStringBuilder.toString();
+    }
+
+    // Getters
+    public UndoableStringBuilder getUndoableStringBuilder() {
+        return undoableStringBuilder;
     }
 
     // Registration actions
@@ -48,44 +60,32 @@ public class GroupAdmin extends UndoableStringBuilder implements Sender {
     // UndoableStringBuilder actions
     @Override
     public void append(String str) {
-        super.append(str);
+        this.undoableStringBuilder.append(str);
         this.updateMembers();
     }
 
     @Override
     public void delete(int start, int end) {
-        super.delete(start, end);
+        this.undoableStringBuilder.delete(start, end);
         this.updateMembers();
     }
 
     @Override
     public void insert(int offset, String str) {
-        super.insert(offset, str);
+        this.undoableStringBuilder.insert(offset, str);
         this.updateMembers();
     }
 
     @Override
-    public void replace(int start, int end, String str) {
-        super.replace(start, end, str);
-        // this.updateMembers(); // not in Sender
-    }
-
-    @Override
-    public void reverse() {
-        super.reverse();
-        // this.updateMembers(); // not in Sender
-    }
-
-    @Override
     public void undo() {
-        super.undo();
+        this.undoableStringBuilder.undo();
         this.updateMembers();
     }
 
     // Update
     private void updateMembers() {
         for (int i = 0; i < this.membersLength; i++) {
-            this.members.get(i).update(this);
+            this.members.get(i).update(this.undoableStringBuilder);
         }
     }
 }
