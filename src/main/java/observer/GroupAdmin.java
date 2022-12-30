@@ -53,6 +53,7 @@ public class GroupAdmin implements Sender {
         if (i >= 0) {
             this.members.set(i, this.members.get(membersLength - 1));
             this.members.set(membersLength - 1, null);
+            this.members.remove(membersLength - 1);
             membersLength--;
         }
     }
