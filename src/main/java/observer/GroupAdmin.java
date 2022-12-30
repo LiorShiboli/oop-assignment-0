@@ -13,7 +13,7 @@ public class GroupAdmin extends UndoableStringBuilder implements Sender {
         this.members = new ArrayList<>();
     }
 
-    private GroupAdmin(CharSequence seq) {
+    public GroupAdmin(CharSequence seq) {
         super(seq);
         this.members = new ArrayList<>();
     }

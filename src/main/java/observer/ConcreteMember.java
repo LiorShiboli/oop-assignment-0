@@ -5,18 +5,20 @@ public class ConcreteMember implements Member {
     private String name;
 
     private int minLength;
+    private int maxlength;
     private String addToEnd;
 
     public ConcreteMember(String name) {
         this.name = name;
         this.minLength = 0;
+        this.maxlength = Integer.MAX_VALUE;
         this.addToEnd = null;
     }
 
-    public ConcreteMember(String name, int minLength, String addToEnd) {
+    public ConcreteMember(String name, int minLength,int maxlength, String addToEnd) {
         this.name = name;
         this.minLength = Math.max(minLength, 0);
-
+        this.maxlength = Math.max(maxlength,0);
         if (this.minLength == 0) {
             this.addToEnd = null;
         } else {
@@ -30,10 +32,12 @@ public class ConcreteMember implements Member {
 
     @Override
     public void update(UndoableStringBuilder usb) {
-        this.usb = usb; // and this is stupidity
+        this.usb = usb; // and this is stupid
 
         System.out.println("INFO: Member " + name + " updated.");
-
+        if(usb.toString().length()>maxlength){
+            usb.delete(maxlength,usb.toString().length());
+        }
         int needed = minLength - usb.toString().length();
         if (needed > 0) {
             // create the str that append to the usb
